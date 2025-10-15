@@ -14,26 +14,38 @@ animals_data = load_data('animals_data.json')
 with open('animals_template.html', 'r') as file:
     template_content = file.read()
 
-# 2. Generate a single string containing all animal info
+# Start with an empty string before the loop
 animals_info_string = ""
 
 for animal in animals_data:
-    # 1. Add the OPENING <li> tag for this animal
+    # --- Start building the HTML for one animal ---
+
+    # 1. Add the opening <li> tag (the "bread" of our sandwich)
     animals_info_string += '<li class="cards__item">'
 
-    # 2. Add the animal details, now ending with <br/>
-    animals_info_string += f"Name: {animal['name']}<br/>"
+    # 2. Add the title, wrapped in its own <div>
+    animals_info_string += f'<div class="card__title">{animal["name"]}</div>'
 
+    # 3. Add the opening <p> tag to group the details
+    animals_info_string += '<p class="card__text">'
+
+    # 4. Add each detail, now with a <strong> tag around the label
     if 'diet' in animal['characteristics']:
-        animals_info_string += f"Diet: {animal['characteristics']['diet']}<br/>"
+        diet = animal['characteristics']['diet']
+        animals_info_string += f'<strong>Diet:</strong> {diet}<br/>'
 
     if 'locations' in animal and animal['locations']:
-        animals_info_string += f"Location: {animal['locations'][0]}<br/>"
+        location = animal['locations'][0]
+        animals_info_string += f'<strong>Location:</strong> {location}<br/>'
 
     if 'type' in animal['characteristics']:
-        animals_info_string += f"Type: {animal['characteristics']['type']}<br/>"
+        type_ = animal['characteristics']['type']
+        animals_info_string += f'<strong>Type:</strong> {type_}<br/>'
 
-    # 3. Add the CLOSING </li> tag to finish this animal's card
+    # 5. Add the closing </p> tag
+    animals_info_string += '</p>'
+
+    # 6. Add the closing </li> tag to finish this animal's card
     animals_info_string += '</li>'
 
 # 3. Replace the placeholder in the template with our generated string
