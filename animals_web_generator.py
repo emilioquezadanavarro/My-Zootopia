@@ -16,19 +16,25 @@ with open('animals_template.html', 'r') as file:
 
 # 2. Generate a single string containing all animal info
 animals_info_string = ""
+
 for animal in animals_data:
-    animals_info_string += f"Name: {animal['name']}\n"
+    # 1. Add the OPENING <li> tag for this animal
+    animals_info_string += '<li class="cards__item">'
+
+    # 2. Add the animal details, now ending with <br/>
+    animals_info_string += f"Name: {animal['name']}<br/>"
 
     if 'diet' in animal['characteristics']:
-        animals_info_string += f"Diet: {animal['characteristics']['diet']}\n"
+        animals_info_string += f"Diet: {animal['characteristics']['diet']}<br/>"
 
     if 'locations' in animal and animal['locations']:
-        animals_info_string += f"Location: {animal['locations'][0]}\n"
+        animals_info_string += f"Location: {animal['locations'][0]}<br/>"
 
     if 'type' in animal['characteristics']:
-        animals_info_string += f"Type: {animal['characteristics']['type']}\n"
+        animals_info_string += f"Type: {animal['characteristics']['type']}<br/>"
 
-    animals_info_string += "\n"  # Add a space after each animal
+    # 3. Add the CLOSING </li> tag to finish this animal's card
+    animals_info_string += '</li>'
 
 # 3. Replace the placeholder in the template with our generated string
 final_html_content = template_content.replace('__REPLACE_ANIMALS_INFO__', animals_info_string)
@@ -37,4 +43,4 @@ final_html_content = template_content.replace('__REPLACE_ANIMALS_INFO__', animal
 with open('animals.html', 'w') as file:
     file.write(final_html_content)
 
-print("Successfully created animals.html!")
+print("Successfully created!")
